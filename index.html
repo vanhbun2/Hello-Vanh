@@ -1,1 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#edf6ff">
+<meta name="description" content="Interactive Periodic Table - 5 languages">
+<title>Periodic Table · Dev Vanhzz</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body oncontextmenu="return false">
 
+<div class="lang-screen" id="langScreen">
+    <div class="lang-bg">
+        <div class="lang-orb lang-orb-1"></div>
+        <div class="lang-orb lang-orb-2"></div>
+        <div class="lang-orb lang-orb-3"></div>
+        <div class="lang-orb lang-orb-4"></div>
+    </div>
+    <div class="lang-content">
+        <div class="lang-logo">
+            <span class="lang-logo-mark">⚛</span>
+        </div>
+        <h1 class="lang-brand">Periodic Table</h1>
+        <p class="lang-tagline">AN INTERACTIVE PERIODIC TABLE</p>
+        <h2 class="lang-prompt" id="langPrompt">Select a language to get started</h2>
+        <div class="lang-grid">
+            <button class="lang-btn" data-lang="en">
+                <span class="lang-flag">🇬🇧</span>
+                <span class="lang-name">English</span>
+            </button>
+            <button class="lang-btn" data-lang="vi">
+                <span class="lang-flag">🇻🇳</span>
+                <span class="lang-name">Tiếng Việt</span>
+            </button>
+            <button class="lang-btn" data-lang="es">
+                <span class="lang-flag">🇪🇸</span>
+                <span class="lang-name">Español</span>
+            </button>
+            <button class="lang-btn" data-lang="pt">
+                <span class="lang-flag">🇧🇷</span>
+                <span class="lang-name">Português</span>
+            </button>
+            <button class="lang-btn" data-lang="fr">
+                <span class="lang-flag">🇫🇷</span>
+                <span class="lang-name">Français</span>
+            </button>
+        </div>
+        <p class="lang-footer">© 2026 · Dev Vanhzz</p>
+    </div>
+</div>
+
+<div class="app" id="app" style="display:none">
+    <div class="background-effects">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+    </div>
+
+    <header class="header">
+        <a href="#" class="brand">⁺₊⋆☾⋆⁺₊𝘿̶𝙚̶𝙫̶ 𝙑𝙖𝙣𝙝𝙯𝙯</a>
+        <h1 id="appTitle">Periodic Table</h1>
+        <p class="subtitle" id="appSubtitle">Discover the elements of the universe.</p>
+        <div class="header-badges">
+            <span><i class="fa-solid fa-atom"></i> 118</span>
+            <span><i class="fa-solid fa-table-cells"></i> 18</span>
+            <span><i class="fa-solid fa-layer-group"></i> 7</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="toolbar glass">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="searchInput" type="search" placeholder="Search... ( / )">
+                <button id="clearSearch" class="clear-search" title="Clear">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <select id="categoryFilter">
+                <option value="all">All</option>
+            </select>
+            <button id="toggleNames" class="action-button">
+                <i class="fa-solid fa-font"></i> <span id="labelNames">Hide Names</span>
+            </button>
+            <button id="toggleMasses" class="action-button">
+                <i class="fa-solid fa-weight-hanging"></i> <span id="labelMass">Hide Mass</span>
+            </button>
+            <button id="highlightMetals" class="action-button">
+                <i class="fa-solid fa-gem"></i> <span id="labelMetals">Metals</span>
+            </button>
+            <button id="highlightNonmetals" class="action-button">
+                <i class="fa-solid fa-wind"></i> <span id="labelNonmetals">Nonmetals</span>
+            </button>
+            <button id="favoritesButton" class="action-button">
+                <i class="fa-solid fa-star"></i> <span id="labelFav">Favorites</span>
+                <span id="favCount" class="badge-count">0</span>
+            </button>
+            <button id="quizButton" class="action-button">
+                <i class="fa-solid fa-question"></i> <span id="labelQuiz">Quiz</span>
+            </button>
+            <select id="langSelect" class="lang-select">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="pt">🇧🇷 Português</option>
+                <option value="fr">🇫🇷 Français</option>
+            </select>
+            <button id="themeToggle" class="action-button" title="Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <button id="resetButton" class="action-button primary">
+                <i class="fa-solid fa-rotate-left"></i> <span id="labelReset">Reset</span>
+            </button>
+        </section>
+
+        <section class="section-heading">
+            <div>
+                <h2 id="headingExplore">Explore Elements</h2>
+                <p id="headingExploreSub">Select any element to view its information.</p>
+            </div>
+            <span id="elementCount" class="count-badge">118 / 118</span>
+        </section>
+
+        <section class="table-card glass">
+            <div class="table-scroll">
+                <div id="periodicTable" class="periodic-table"></div>
+            </div>
+        </section>
+
+        <section class="series-section glass">
+            <div class="series-title">
+                <span class="series-icon lanthanide-icon"></span>
+                <span id="labelLanthanides">Lanthanides</span>
+            </div>
+            <div class="table-scroll">
+                <div id="lanthanides" class="series-grid"></div>
+            </div>
+            <div class="series-title">
+                <span class="series-icon actinide-icon"></span>
+                <span id="labelActinides">Actinides</span>
+            </div>
+            <div class="table-scroll">
+                <div id="actinides" class="series-grid"></div>
+            </div>
+        </section>
+
+        <section class="section-heading">
+            <div>
+                <h2 id="headingCategories">Element Categories</h2>
+                <p id="headingCategoriesSub">Click a category to highlight.</p>
+            </div>
+        </section>
+
+        <section id="categoryLegend" class="legend glass"></section>
+
+        <section class="bottom-grid">
+            <article class="info-panel glass">
+                <div class="panel-icon"><i class="fa-solid fa-circle-info"></i></div>
+                <h2 id="infoTitle">Periodic Table Explorer</h2>
+                <p id="infoDesc">Search for elements, explore chemical categories, and discover atomic information.</p>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <strong id="visibleCount">118</strong>
+                        <span id="statMatching">Matching</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>18</strong>
+                        <span id="statGroups">Groups</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>7</strong>
+                        <span id="statPeriods">Periods</span>
+                    </div>
+                </div>
+                <div class="history-section">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> <span id="historyTitle">Recently Viewed</span></h3>
+                    <div id="historyList" class="history-list">
+                        <span class="history-empty" id="historyEmpty">No elements viewed yet</span>
+                    </div>
+                </div>
+                <a class="discord-button" href="https://discord.gg/BE4nRtYgCj" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-discord"></i> <span id="labelDiscord">Join Our Discord</span>
+                </a>
+            </article>
+
+            <article class="music-panel glass">
+                <div class="panel-icon"><i class="fa-solid fa-music"></i></div>
+                <h2 id="musicTitle">Chill Music</h2>
+                <p id="musicDesc">Listen to relaxing music while exploring the elements.</p>
+                <div class="music-art">
+                    <div class="music-moon">☾</div>
+                    <div class="music-art-text">
+                        <span>CHILL ZONE</span>
+                        <strong id="musicNowPlaying">Lofi Hip Hop Radio</strong>
+                        <small id="musicArtistName">Lofi Girl</small>
+                    </div>
+                    <div class="music-equalizer" id="equalizer">
+                        <i></i><i></i><i></i><i></i><i></i>
+                    </div>
+                </div>
+                <div class="music-controls">
+                    <button id="prevMusic" class="action-button" title="Previous">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button id="playMusic" class="action-button primary">
+                        <i class="fa-solid fa-play"></i> <span id="labelPlay">Play</span>
+                    </button>
+                    <button id="stopMusic" class="action-button">
+                        <i class="fa-solid fa-stop"></i> <span id="labelStop">Stop</span>
+                    </button>
+                    <button id="nextMusic" class="action-button" title="Next">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                </div>
+                <div class="music-controls">
+                    <button id="shuffleMusic" class="action-button">
+                        <i class="fa-solid fa-shuffle"></i> <span id="labelShuffle">Shuffle</span>
+                    </button>
+                    <a class="action-button youtube-button" href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-youtube"></i> YouTube
+                    </a>
+                </div>
+                <div id="musicPlayer" class="music-player">
+                    <iframe id="youtubeFrame" title="Music" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <p class="music-note"><i class="fa-solid fa-headphones"></i> <span id="musicNote">Music source: YouTube · Lofi Girl</span></p>
+            </article>
+        </section>
+
+        <footer>
+            <div class="footer-brand">⁺₊⋆☾⋆⁺₊ Dev Vanhzz</div>
+            <p id="footerMade">Made with <i class="fa-solid fa-heart" style="color:#ec4899"></i> for curious minds.</p>
+            <a href="https://discord.gg/BE4nRtYgCj" target="_blank" rel="noopener">
+                <i class="fa-brands fa-discord"></i> <span id="footerDiscord">Discord Community</span>
+            </a>
+        </footer>
+    </main>
+
+    <div id="elementModal" class="modal-backdrop" aria-hidden="true">
+        <div class="element-modal glass" role="dialog">
+            <div class="modal-header">
+                <span class="modal-label" id="modalLabel">ELEMENT INFORMATION</span>
+                <button id="closeModal" class="close-button">×</button>
+            </div>
+            <div class="modal-main">
+                <div id="modalSymbolBox" class="modal-symbol-box">
+                    <span id="modalNumber" class="modal-number">1</span>
+                    <strong id="modalSymbol">H</strong>
+                    <span id="modalMassSmall" class="modal-mass-small">1.008</span>
+                </div>
+                <div class="modal-title">
+                    <h2 id="modalName">Hydrogen</h2>
+                    <p id="modalSubtitle">Atomic Number 1</p>
+                    <span id="modalCategory" class="category-badge">Nonmetal</span>
+                </div>
+                <button id="modalFav" class="fav-btn" title="Favorite">
+                    <i class="fa-regular fa-star"></i>
+                </button>
+            </div>
+            <div id="modalDetails" class="modal-details"></div>
+            <div class="modal-actions">
+                <button id="modalCompare" class="action-button">
+                    <i class="fa-solid fa-code-compare"></i> <span id="modalCompareLabel">Compare</span>
+                </button>
+                <button id="modalDone" class="action-button primary modal-done">
+                    <span id="modalDoneLabel">Done</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quizModal" class="modal-backdrop" aria-hidden="true">
+        <div class="element-modal glass quiz-modal" role="dialog">
+            <div class="modal-header">
+                <span class="modal-label"><i class="fa-solid fa-graduation-cap"></i> <span id="quizLabel">QUIZ</span></span>
+                <button id="closeQuiz" class="close-button">×</button>
+            </div>
+            <div id="quizContent" class="quiz-content"></div>
+        </div>
+    </div>
+
+    <div id="compareModal" class="modal-backdrop" aria-hidden="true">
+        <div class="element-modal glass compare-modal" role="dialog">
+            <div class="modal-header">
+                <span class="modal-label"><i class="fa-solid fa-code-compare"></i> <span id="compareLabel">COMPARE</span></span>
+                <button id="closeCompare" class="close-button">×</button>
+            </div>
+            <div id="compareContent" class="compare-content"></div>
+        </div>
+    </div>
+
+    <div id="favoritesModal" class="modal-backdrop" aria-hidden="true">
+        <div class="element-modal glass" role="dialog">
+            <div class="modal-header">
+                <span class="modal-label"><i class="fa-solid fa-star"></i> <span id="favoritesLabel">FAVORITES</span></span>
+                <button id="closeFavorites" class="close-button">×</button>
+            </div>
+            <div id="favoritesContent" class="favorites-content"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <button id="scrollTop" class="scroll-top" title="Top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
